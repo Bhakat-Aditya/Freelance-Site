@@ -1,27 +1,32 @@
-import { Canvas } from '@react-three/fiber';
-import { Environment, ContactShadows } from '@react-three/drei';
-import React, { Suspense } from 'react';
-// Import the component gltfjsx just made for you!
-// Adjust the import path and component name based on what it generated
-import ModelIdle from './Model-idle'; 
+import React, { useRef, useEffect } from 'react';
+import { useGLTF, useAnimations } from '@react-three/drei';
 
-export default function Scene() {
+export default function HappyIdle(props) {
+  const group = useRef();
+  
+  // 1. Load the renamed file from the public folder
+  const { scene, animations } = useGLTF('/happy-idle.glb');
+  
+  // 2. Extract the animation actions
+  const { actions } = useAnimations(animations, group);
+
+  // 3. Auto-play the animation when the component loads
+  useEffect(() => {
+    // Mixamo usually packs the animation as the first action. 
+    // This dynamically finds and plays it!
+    const actionName = Object.keys(actions)[0];
+    if (actionName && actions[actionName]) {
+      actions[actionName].reset().fadeIn(0.5).play();
+    }
+  }, [actions]);
+
   return (
-    <Canvas camera={{ position: [0, 1.5, 4], fov: 50 }}>
-      {/* Lighting is crucial for a premium look */}
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1.5} />
-      <Environment preset="city" /> {/* Adds realistic reflections */}
-
-      {/* Suspense handles the loading state of the 3D model */}
-      <Suspense fallback={null}>
-        {/* We move the model down slightly so it stands on the "floor" */}
-        <group position={[0, -1, 0]}>
-          <ModelIdle />
-          {/* Adds a nice, grounded shadow beneath your avatar */}
-          <ContactShadows opacity={0.4} scale={10} blur={2} far={4} />
-        </group>
-      </Suspense>
-    </Canvas>
+    <group ref={group} {...props} dispose={null}>
+      {/* The primitive tag renders the entire model perfectly */}
+      <primitive object={scene} />
+    </group>
   );
 }
+
+// Preload ensures the model is ready before the user scrolls to it
+useGLTF.preload('/happy-idle.glb');
