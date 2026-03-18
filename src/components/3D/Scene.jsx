@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { Environment, ContactShadows } from '@react-three/drei';
 import React, { Suspense } from 'react';
-import HappyIdle from './HappyIdle'; // Importing your avatar!
+import HappyIdle from './HappyIdle.jsx'; // Importing your avatar!
 
 export default function Scene() {
   return (
