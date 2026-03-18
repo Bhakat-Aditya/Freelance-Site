@@ -1,1 +1,103 @@
 @import "tailwindcss";
+
+/* 1. THEME DEFINITIONS */
+@theme {
+  --color-agency-blue: #1e40af;
+  --color-agency-emerald: #065f46;
+  --color-agency-bg: #020617;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: var(--color-agency-bg); /* Richer than pure black */
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* Kill unwanted scrollbars from 3D overlaps */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 2. ATMOSPHERIC BACKGROUND MESH */
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+}
+
+/* Animated light blobs to create depth behind your 3D models */
+.bg-blob {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.blob-1 {
+  background: var(--color-agency-blue);
+  top: -10%;
+  left: -10%;
+  animation: float-slow 25s infinite alternate ease-in-out;
+}
+
+.blob-2 {
+  background: var(--color-agency-emerald);
+  bottom: -10%;
+  right: -5%;
+  animation: float-slow 30s infinite alternate-reverse ease-in-out;
+}
+
+/* 3. CINEMATIC OVERLAYS */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.04; /* Very subtle texture */
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  filter: contrast(150%) brightness(100%);
+}
+
+/* 4. ANIMATIONS */
+@keyframes float-slow {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(100px, 50px) scale(1.1); }
+  100% { transform: translate(-50px, 100px) scale(1); }
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-move 6s linear infinite;
+}
+
+/* 5. AGENCY TYPOGRAPHY CLASSES */
+.outline-text {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  color: transparent;
+  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.outline-text:hover {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  color: white;
+}
+
+

@@ -36,7 +36,7 @@ export default function App() {
 
         {/* 2. Services (Transparent bg to show 3D Typing) */}
         <div className="bg-transparent h-screen relative">
-          <Services />
+          {/* <Services /> */}
         </div>
 
         {/* --- SWAP TO PRICING --- */}
