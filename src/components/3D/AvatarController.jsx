@@ -4,10 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useFrame } from '@react-three/fiber';
 
 // Import all 4 of your models
-import HappyIdle from './HappyIdle.jsx';
-import Typing from './Typing.jsxHappyIdle.jsx';
-import TalkingOnPhone from './TalkingOnPhone.jsxHappyIdle.jsx';
-import StandingGreeting from './StandingGreeting.jsxHappyIdle.jsx';
+import HappyIdle from './HappyIdle';
+import Typing from './Typing';
+import TalkingOnPhone from './TalkingOnPhone';
+import StandingGreeting from './StandingGreeting';
 
 gsap.registerPlugin(ScrollTrigger);
 
